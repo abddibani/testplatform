@@ -1,0 +1,146 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-tracker-heading" data-cy="TrackerCreateUpdateHeading" jhiTranslate="platformApp.tracker.home.createOrEditLabel">
+        Create or edit a Tracker
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.tracker.id" for="field_id">Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="id"
+            id="field_id"
+            data-cy="id"
+            formControlName="id"
+            [readonly]="editForm.get('id')!.value != null"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.tracker.activated" for="field_activated">Activated</label>
+          <input type="checkbox" class="form-check" name="activated" id="field_activated" data-cy="activated" formControlName="activated" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.tracker.createAt" for="field_createAt">Create At</label>
+          <div class="input-group">
+            <input
+              id="field_createAt"
+              data-cy="createAt"
+              type="text"
+              class="form-control"
+              name="createAt"
+              ngbDatepicker
+              #createAtDp="ngbDatepicker"
+              formControlName="createAt"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="createAtDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.tracker.modifiedAt" for="field_modifiedAt">Modified At</label>
+          <div class="input-group">
+            <input
+              id="field_modifiedAt"
+              data-cy="modifiedAt"
+              type="text"
+              class="form-control"
+              name="modifiedAt"
+              ngbDatepicker
+              #modifiedAtDp="ngbDatepicker"
+              formControlName="modifiedAt"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="modifiedAtDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.tracker.activationBegin" for="field_activationBegin"
+            >Activation Begin</label
+          >
+          <div class="input-group">
+            <input
+              id="field_activationBegin"
+              data-cy="activationBegin"
+              type="text"
+              class="form-control"
+              name="activationBegin"
+              ngbDatepicker
+              #activationBeginDp="ngbDatepicker"
+              formControlName="activationBegin"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="activationBeginDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.tracker.activationEnd" for="field_activationEnd"
+            >Activation End</label
+          >
+          <div class="input-group">
+            <input
+              id="field_activationEnd"
+              data-cy="activationEnd"
+              type="text"
+              class="form-control"
+              name="activationEnd"
+              ngbDatepicker
+              #activationEndDp="ngbDatepicker"
+              formControlName="activationEnd"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="activationEndDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.tracker.client" for="field_client">Client</label>
+          <select class="form-control" id="field_client" data-cy="client" name="client" formControlName="client">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="clientOption.id === editForm.get('client')!.value?.id ? editForm.get('client')!.value : clientOption"
+              *ngFor="let clientOption of clientsSharedCollection; trackBy: trackClientById"
+            >
+              {{ clientOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

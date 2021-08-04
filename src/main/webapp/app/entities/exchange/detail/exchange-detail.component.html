@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="exchange">
+      <h2 data-cy="exchangeDetailsHeading"><span jhiTranslate="platformApp.exchange.detail.title">Exchange</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="platformApp.exchange.id">Id</span></dt>
+        <dd>
+          <span>{{ exchange.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.exchange.name">Name</span></dt>
+        <dd>
+          <span>{{ exchange.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.exchange.apikey">Apikey</span></dt>
+        <dd>
+          <span>{{ exchange.apikey }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.exchange.secrit">Secrit</span></dt>
+        <dd>
+          <span>{{ exchange.secrit }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.exchange.activated">Activated</span></dt>
+        <dd>
+          <span>{{ exchange.activated }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.exchange.createAt">Create At</span></dt>
+        <dd>
+          <span>{{ exchange.createAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.exchange.modifiedAt">Modified At</span></dt>
+        <dd>
+          <span>{{ exchange.modifiedAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.exchange.client">Client</span></dt>
+        <dd>
+          <div *ngIf="exchange.client">
+            <a [routerLink]="['/client', exchange.client?.id, 'view']">{{ exchange.client?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/exchange', exchange.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

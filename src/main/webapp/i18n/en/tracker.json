@@ -1,0 +1,29 @@
+{
+  "platformApp": {
+    "tracker": {
+      "home": {
+        "title": "Trackers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Tracker",
+        "createOrEditLabel": "Create or edit a Tracker",
+        "notFound": "No Trackers found"
+      },
+      "created": "A new Tracker is created with identifier {{ param }}",
+      "updated": "A Tracker is updated with identifier {{ param }}",
+      "deleted": "A Tracker is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Tracker {{ id }}?"
+      },
+      "detail": {
+        "title": "Tracker"
+      },
+      "id": "Id",
+      "activated": "Activated",
+      "createAt": "Create At",
+      "modifiedAt": "Modified At",
+      "activationBegin": "Activation Begin",
+      "activationEnd": "Activation End",
+      "client": "Client"
+    }
+  }
+}
