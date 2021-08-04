@@ -1,0 +1,47 @@
+{
+  "name": "Tracker",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "activated",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "createAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "modifiedAt",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "activationBegin",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "activationEnd",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "client",
+      "otherEntityRelationshipName": "tracker",
+      "relationshipName": "client"
+    }
+  ],
+  "entityTableName": "tracker",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["platform"],
+  "changelogDate": "20210804192923"
+}

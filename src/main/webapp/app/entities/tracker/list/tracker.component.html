@@ -1,0 +1,92 @@
+<div>
+  <h2 id="page-heading" data-cy="TrackerHeading">
+    <span jhiTranslate="platformApp.tracker.home.title">Trackers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="platformApp.tracker.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-tracker"
+        [routerLink]="['/tracker/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="platformApp.tracker.home.createLabel"> Create a new Tracker </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="trackers?.length === 0">
+    <span jhiTranslate="platformApp.tracker.home.notFound">No trackers found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="trackers && trackers.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="platformApp.tracker.id">Id</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.tracker.activated">Activated</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.tracker.createAt">Create At</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.tracker.modifiedAt">Modified At</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.tracker.activationBegin">Activation Begin</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.tracker.activationEnd">Activation End</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.tracker.client">Client</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tracker of trackers; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/tracker', tracker.id, 'view']">{{ tracker.id }}</a>
+          </td>
+          <td>{{ tracker.activated }}</td>
+          <td>{{ tracker.createAt | formatMediumDate }}</td>
+          <td>{{ tracker.modifiedAt | formatMediumDate }}</td>
+          <td>{{ tracker.activationBegin | formatMediumDate }}</td>
+          <td>{{ tracker.activationEnd | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="tracker.client">
+              <a [routerLink]="['/client', tracker.client?.id, 'view']">{{ tracker.client?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/tracker', tracker.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/tracker', tracker.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(tracker)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

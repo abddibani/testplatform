@@ -1,0 +1,94 @@
+<div>
+  <h2 id="page-heading" data-cy="ExchangeHeading">
+    <span jhiTranslate="platformApp.exchange.home.title">Exchanges</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="platformApp.exchange.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-exchange"
+        [routerLink]="['/exchange/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="platformApp.exchange.home.createLabel"> Create a new Exchange </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="exchanges?.length === 0">
+    <span jhiTranslate="platformApp.exchange.home.notFound">No exchanges found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="exchanges && exchanges.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="platformApp.exchange.id">Id</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.exchange.name">Name</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.exchange.apikey">Apikey</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.exchange.secrit">Secrit</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.exchange.activated">Activated</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.exchange.createAt">Create At</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.exchange.modifiedAt">Modified At</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.exchange.client">Client</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exchange of exchanges; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/exchange', exchange.id, 'view']">{{ exchange.id }}</a>
+          </td>
+          <td>{{ exchange.name }}</td>
+          <td>{{ exchange.apikey }}</td>
+          <td>{{ exchange.secrit }}</td>
+          <td>{{ exchange.activated }}</td>
+          <td>{{ exchange.createAt | formatMediumDate }}</td>
+          <td>{{ exchange.modifiedAt | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="exchange.client">
+              <a [routerLink]="['/client', exchange.client?.id, 'view']">{{ exchange.client?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/exchange', exchange.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/exchange', exchange.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(exchange)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

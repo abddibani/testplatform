@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="tracker">
+      <h2 data-cy="trackerDetailsHeading"><span jhiTranslate="platformApp.tracker.detail.title">Tracker</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="platformApp.tracker.id">Id</span></dt>
+        <dd>
+          <span>{{ tracker.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.tracker.activated">Activated</span></dt>
+        <dd>
+          <span>{{ tracker.activated }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.tracker.createAt">Create At</span></dt>
+        <dd>
+          <span>{{ tracker.createAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.tracker.modifiedAt">Modified At</span></dt>
+        <dd>
+          <span>{{ tracker.modifiedAt | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.tracker.activationBegin">Activation Begin</span></dt>
+        <dd>
+          <span>{{ tracker.activationBegin | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.tracker.activationEnd">Activation End</span></dt>
+        <dd>
+          <span>{{ tracker.activationEnd | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="platformApp.tracker.client">Client</span></dt>
+        <dd>
+          <div *ngIf="tracker.client">
+            <a [routerLink]="['/client', tracker.client?.id, 'view']">{{ tracker.client?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/tracker', tracker.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

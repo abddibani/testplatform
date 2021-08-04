@@ -1,0 +1,86 @@
+<div>
+  <h2 id="page-heading" data-cy="OrderHeading">
+    <span jhiTranslate="platformApp.order.home.title">Orders</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="platformApp.order.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-order"
+        [routerLink]="['/order/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="platformApp.order.home.createLabel"> Create a new Order </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="orders?.length === 0">
+    <span jhiTranslate="platformApp.order.home.notFound">No orders found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="orders && orders.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="platformApp.order.id">Id</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.order.symbol">Symbol</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.order.price">Price</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.order.quantity">Quantity</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.order.createAt">Create At</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.order.modifiedAt">Modified At</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.order.completed">Completed</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.order.failed">Failed</span></th>
+          <th scope="col"><span jhiTranslate="platformApp.order.client">Client</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/order', order.id, 'view']">{{ order.id }}</a>
+          </td>
+          <td>{{ order.symbol }}</td>
+          <td>{{ order.price }}</td>
+          <td>{{ order.quantity }}</td>
+          <td>{{ order.createAt | formatMediumDate }}</td>
+          <td>{{ order.modifiedAt | formatMediumDate }}</td>
+          <td>{{ order.completed }}</td>
+          <td>{{ order.failed }}</td>
+          <td>
+            <div *ngIf="order.client">
+              <a [routerLink]="['/client', order.client?.id, 'view']">{{ order.client?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/order', order.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/order', order.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(order)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

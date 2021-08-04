@@ -1,0 +1,115 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-exchange-heading" data-cy="ExchangeCreateUpdateHeading" jhiTranslate="platformApp.exchange.home.createOrEditLabel">
+        Create or edit a Exchange
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.exchange.id" for="field_id">Id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="id"
+            id="field_id"
+            data-cy="id"
+            formControlName="id"
+            [readonly]="editForm.get('id')!.value != null"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.exchange.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.exchange.apikey" for="field_apikey">Apikey</label>
+          <input type="text" class="form-control" name="apikey" id="field_apikey" data-cy="apikey" formControlName="apikey" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.exchange.secrit" for="field_secrit">Secrit</label>
+          <input type="text" class="form-control" name="secrit" id="field_secrit" data-cy="secrit" formControlName="secrit" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.exchange.activated" for="field_activated">Activated</label>
+          <input type="checkbox" class="form-check" name="activated" id="field_activated" data-cy="activated" formControlName="activated" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.exchange.createAt" for="field_createAt">Create At</label>
+          <div class="input-group">
+            <input
+              id="field_createAt"
+              data-cy="createAt"
+              type="text"
+              class="form-control"
+              name="createAt"
+              ngbDatepicker
+              #createAtDp="ngbDatepicker"
+              formControlName="createAt"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="createAtDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.exchange.modifiedAt" for="field_modifiedAt">Modified At</label>
+          <div class="input-group">
+            <input
+              id="field_modifiedAt"
+              data-cy="modifiedAt"
+              type="text"
+              class="form-control"
+              name="modifiedAt"
+              ngbDatepicker
+              #modifiedAtDp="ngbDatepicker"
+              formControlName="modifiedAt"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="modifiedAtDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="platformApp.exchange.client" for="field_client">Client</label>
+          <select class="form-control" id="field_client" data-cy="client" name="client" formControlName="client">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="clientOption.id === editForm.get('client')!.value?.id ? editForm.get('client')!.value : clientOption"
+              *ngFor="let clientOption of clientsSharedCollection; trackBy: trackClientById"
+            >
+              {{ clientOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
